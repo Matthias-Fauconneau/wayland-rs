@@ -121,9 +121,12 @@ impl CursorTheme {
         match cur {
             Some(i) => Some(&self.cursors[i]),
             None => {
-                let cur = self.load_cursor(name, self.size).unwrap();
-                self.cursors.push(cur);
-                self.cursors.iter().last()
+                if let Some(cur) = self.load_cursor(name, self.size) {
+                    self.cursors.push(cur);
+                    self.cursors.iter().last()
+                } else {
+                    None
+                }
             }
         }
     }
